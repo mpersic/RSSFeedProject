@@ -14,6 +14,10 @@ extension Container {
     var mainVM: Factory<MainViewModel> {
         self { MainViewModel() }
     }
+    
+    var settingsVM: Factory<SettingsViewModel> {
+        self { SettingsViewModel() }
+    }
 }
 
 // MARK: - register services

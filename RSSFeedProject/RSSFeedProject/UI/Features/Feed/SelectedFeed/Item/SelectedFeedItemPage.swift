@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FeedItemView: View {
+struct SelectedFeedItemPage: View {
     let item: FeedItemModel
 
     var body: some View {

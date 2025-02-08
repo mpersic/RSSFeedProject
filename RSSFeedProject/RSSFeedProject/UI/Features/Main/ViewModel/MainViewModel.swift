@@ -16,6 +16,15 @@ class MainViewModel: ObservableObject {
     @Published var favorites: [FeedModel] = []
     @Published var searchText = ""
     
+    init(){
+        /*Task {
+            searchText = "https://www.9to5mac.com/feed/"
+            await addFeed()
+            searchText = "https://www.digitaltrends.com/feed/"
+            await addFeed()
+        }*/
+    }
+    
     func addFavorite(newItem: FeedModel) async {
         onMain { [self] in
             feeds.append(newItem)
@@ -23,7 +32,7 @@ class MainViewModel: ObservableObject {
     }
     
     func addFeed() async {
-        let result = await feedRepository.getFeed(
+        let result = await feedRepository.addNewRSSFeed(
             feed: searchText)
         switch result {
         case .success(let fetchedFeed):
@@ -39,12 +48,11 @@ class MainViewModel: ObservableObject {
         onMain { [self] in
             feeds = []
         }
-        let result = await feedRepository.getFeed(
-            feed: "https://www.bbc.com/news/technology/rss.xml")
+        let result = await feedRepository.getSelectedRSSFeed()
         switch result {
         case .success(let fetchedFeed):
             onMain { [self] in
-                feeds.append(fetchedFeed)
+                feeds.append(contentsOf: fetchedFeed)
             }
         case .failure(let error):
             print("Error loading feeds: \(error)")
