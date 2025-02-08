@@ -8,29 +8,29 @@
 import Factory
 import SwiftUI
 
-struct FeedPage: View {
+struct SelectFeedPage: View {
 
-    @InjectedObject(\.mainVM) private var vm
+    @InjectedObject(\.selectFeedVM) private var vm
     @FocusState private var focusedField: FocusedField?
 
     var body: some View {
         List {
-            Section("Enter field") {
+            Section(Localizable.enterYourNewFeed.localized()) {
+                TextField("", text: $vm.searchText)
+                    .onSubmit(addToFeedTask)
                 CustomTextField(
                     text: $vm.searchText,
                     focusedField: _focusedField,
                     field: .rssInput,
-                    placeholder: "Rss link",
-                    onSubmit: {
-                        Task {
-                            await vm.addFeed()
-                        }
-                    })
+                    placeholder: Localizable.rssLink.localized(),
+                    onSubmit: addToFeedTask)
             }
 
-            Section("Feeds") {
+            Section(Localizable.yourFeeds.localized()) {
                 ForEach(vm.feeds, id: \.title) { feed in
-                    NavigationLink(destination: SelectedFeedPage(feed: feed)) {
+                    NavigationLink(
+                        destination: FeedItemSelectionPage(feed: feed)
+                    ) {
                         Text(feed.title ?? "")
                     }
                 }
@@ -53,8 +53,14 @@ struct FeedPage: View {
         }
         .animation(.default, value: vm.feeds)
     }
+
+    private func addToFeedTask() {
+        Task {
+            await vm.addToFeed()
+        }
+    }
 }
 
 #Preview {
-    FeedPage()
+    SelectFeedPage()
 }

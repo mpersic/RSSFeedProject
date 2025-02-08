@@ -8,7 +8,7 @@
 import FeedKit
 import SwiftUI
 
-struct SelectedFeedPage: View {
+struct FeedItemSelectionPage: View {
     let feed: FeedModel
 
     var body: some View {
@@ -21,7 +21,7 @@ struct SelectedFeedPage: View {
             }
             Section("Items") {
                 ForEach(feed.items ?? [], id: \.title) { item in
-                    NavigationLink(destination: SelectedFeedItemPage(item: item)) {
+                    NavigationLink(destination: FeedItemDetailsPage(item: item)) {
                         Text(item.title ?? "-")
                     }
                 }

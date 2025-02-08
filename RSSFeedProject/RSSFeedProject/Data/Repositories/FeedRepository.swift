@@ -8,7 +8,7 @@
 import FeedKit
 import Foundation
 
-class FeedRepository {
+class FeedRepository: FeedRepositoryProtocol {
 
     private let feedFilename = "feed.json"
 

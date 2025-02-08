@@ -11,38 +11,27 @@ import SwiftUI
 
 struct MainPage: View {
 
-    @AppStorage("appearance") private var selectedAppearance: Appearance =
-        .system
-    @AppStorage("language")
-    private var language = LocalizationService.shared.language
-    
-    var colorScheme: ColorScheme? {
-        switch selectedAppearance {
-        case .light:
-            return .light
-        case .dark:
-            return .dark
-        case .system:
-            return nil
-        }
-    }
+    @InjectedObject(\.mainVM) private var vm
 
     var body: some View {
         NavigationStack {
             TabView {
-                FeedPage()
+                SelectFeedPage()
                     .tabItem {
-                        Label(Localizable.home.localized(language), systemImage: "newspaper.fill")
+                        Label(
+                            Localizable.home.localized(vm.language),
+                            systemImage: "newspaper.fill")
                     }
 
                 SettingsPage()
                     .tabItem {
                         Label(
-                            Localizable.settings.localized(language), systemImage: "gearshape.fill")
+                            Localizable.settings.localized(vm.language),
+                            systemImage: "gearshape.fill")
                     }
             }
-            .navigationTitle("RSS Viewer")
-            .preferredColorScheme(colorScheme)
+            .navigationTitle(Localizable.rssViewer.localized(vm.language))
+            .preferredColorScheme(vm.colorScheme)
         }
     }
 }

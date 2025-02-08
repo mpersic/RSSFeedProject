@@ -14,7 +14,8 @@ struct FeedModel: Equatable, Codable {
     var date: Date?
     var description: String?
     var items: [FeedItemModel]?
-
+    var isFavorite: Bool = false
+    
     // MARK: - Coding Keys
     private enum CodingKeys: String, CodingKey {
         case title, date, description, items

@@ -12,7 +12,24 @@ enum Localizable {
     // MARK: - Main Screen
     static var settings: String { "settings" }
     static var home: String { "home" }
+    static var rssViewer: String { "rss-viewer" }
 
+    // MARK: - Feed Screen
+    static var enterYourNewFeed: String { "enter-your-new-feed" }
+    static var rssLink: String { "rss-link" }
+    static var yourFeeds: String { "your-feeds" }
+
+    // MARK: - Settings Screen
+    static var feedSettings: String { "feed-settings" }
+    static var clearFeed: String { "clear-feed" }
+    static var appearance: String { "appearance" }
+    static var system: String { "system" }
+    static var light: String { "light" }
+    static var dark: String { "dark" }
+    static var chooseALanguage: String { "choose-a-language" }
+    static var english: String { "english" }
+    static var croatian: String { "croatian" }
+    
     // MARK: - Splash Screen
     static var splashScreenWelcome: String { "splash-screen-welcome" }
 
@@ -21,6 +38,4 @@ enum Localizable {
 
     // MARK: - Languages
     static var language: String { "language" }
-    static var english: String { "english" }
-    static var croatian: String { "croatian" }
 }

@@ -17,6 +17,33 @@ class SettingsViewModel: ObservableObject {
     @Injected(\.feedRepository) private var feedRepository
 
     func clearFeed() {
-        feedRepository.clearAllSelectedRSSFeed()
+        let result = feedRepository.clearAllSelectedRSSFeed()
+        switch result {
+        case .failure(let failure):
+            print(failure.localizedDescription)
+        default:
+            break
+        }
     }
+
+    func getLocalizableForAppearance(appearance: Appearance) -> String {
+        switch appearance {
+        case .system:
+            Localizable.system
+        case .light:
+            Localizable.light
+        case .dark:
+            Localizable.dark
+        }
+    }
+
+    func getLocalizableForLanguage(language: Language) -> String {
+        switch language {
+        case .english:
+            Localizable.croatian
+        case .croatian:
+            Localizable.english
+        }
+    }
+
 }

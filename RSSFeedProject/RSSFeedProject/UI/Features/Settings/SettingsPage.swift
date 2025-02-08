@@ -14,26 +14,36 @@ struct SettingsPage: View {
 
     var body: some View {
         List {
-            Section("Feed settings") {
-                Text("Clear feed")
+            Section(Localizable.feedSettings.localized()) {
+                Text(Localizable.clearFeed.localized())
                     .onTapGesture {
                         vm.clearFeed()
                     }
             }
-            
+
             Section(Localizable.darkMode.localized()) {
-                Picker("Appearance", selection: $vm.selectedAppearance) {
-                    ForEach(Appearance.allCases) { mode in
-                        Text(mode.rawValue).tag(mode)
+                Picker(
+                    Localizable.appearance.localized(),
+                    selection: $vm.selectedAppearance
+                ) {
+                    ForEach(Appearance.allCases) {
+                        Text(
+                            vm.getLocalizableForAppearance(appearance: $0)
+                                .localized()
+                        )
+                        .tag($0)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
             }
-            
-            Section("Select a language") {
-                Picker("Language", selection: $vm.language) {
-                    ForEach(Language.allCases) { mode in
-                        Text(mode.rawValue).tag(mode)
+
+            Section(Localizable.chooseALanguage.localized()) {
+                Picker("", selection: $vm.language) {
+                    ForEach(Language.allCases) {
+                        Text(
+                            vm.getLocalizableForLanguage(language: $0)
+                                .localized()
+                        ).tag($0)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
