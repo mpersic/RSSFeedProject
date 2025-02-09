@@ -18,6 +18,7 @@ enum Localizable {
     static var enterYourNewFeed: String { "enter-your-new-feed" }
     static var rssLink: String { "rss-link" }
     static var yourFeeds: String { "your-feeds" }
+    static var yourFavorites: String { "your-favorites" }
 
     // MARK: - Settings Screen
     static var feedSettings: String { "feed-settings" }

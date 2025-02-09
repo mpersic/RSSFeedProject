@@ -12,25 +12,40 @@ import Foundation
 class SelectFeedViewModel: ObservableObject {
 
     @Injected(\.feedRepository) private var feedRepository
-    @Published var feeds: [FeedModel] = []
-    @Published var favorites: [FeedModel] = []
-    @Published var searchText = ""
-    
-    init(){
-        /*Task {
-            searchText = "https://www.9to5mac.com/feed/"
-            await addFeed()
-            searchText = "https://www.digitaltrends.com/feed/"
-            await addFeed()
-        }*/
-    }
-    
-    func addFavorite(newItem: FeedModel) async {
-        onMain { [self] in
-            feeds.append(newItem)
+    @Published var feeds: [FeedModel] = [] {
+        didSet {
+            onMain { [self] in
+                favorites = feeds.filter { $0.isFavorite }
+            }
         }
     }
-    
+    @Published var favorites: [FeedModel] = []
+    @Published var searchText = ""
+
+    init() {
+        /*Task {
+            searchText = "https://www.9to5mac.com/feed/"
+            await addToFeed()
+            searchText = "https://www.digitaltrends.com/feed/"
+            await addToFeed()
+        }*/
+    }
+
+    func addFavorite(newItem: FeedModel) async {
+        var copy = newItem
+        copy.isFavorite.toggle()
+        Task {
+            let result = await feedRepository.addFavoriteToFeed(
+                feed: copy)
+            switch result {
+            case .success(let fetchedFeed):
+                await loadFeeds()
+            case .failure(let error):
+                print("Error adding to favorites: \(error)")
+            }
+        }
+    }
+
     func addToFeed() async {
         let result = await feedRepository.addNewRSSFeed(
             feed: searchText)
@@ -58,8 +73,8 @@ class SelectFeedViewModel: ObservableObject {
             print("Error loading feeds: \(error)")
         }
     }
-    
-    func removeFeed(at offset: IndexSet){
+
+    func removeFeed(at offset: IndexSet) {
         onMain { [self] in
             feeds.remove(atOffsets: offset)
         }

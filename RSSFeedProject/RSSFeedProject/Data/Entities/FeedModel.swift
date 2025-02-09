@@ -18,7 +18,7 @@ struct FeedModel: Equatable, Codable {
     
     // MARK: - Coding Keys
     private enum CodingKeys: String, CodingKey {
-        case title, date, description, items
+        case title, date, description, items, isFavorite
     }
 
     // MARK: - Initializers
@@ -69,7 +69,7 @@ struct FeedModel: Equatable, Codable {
             String.self, forKey: .description)
         items = try container.decodeIfPresent(
             [FeedItemModel].self, forKey: .items)
-
+        isFavorite = try container.decodeIfPresent(Bool.self, forKey: .isFavorite) ?? false
         if let dateString = try container.decodeIfPresent(
             String.self, forKey: .date)
         {
@@ -82,6 +82,7 @@ struct FeedModel: Equatable, Codable {
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(description, forKey: .description)
         try container.encodeIfPresent(items, forKey: .items)
+        try container.encodeIfPresent(isFavorite, forKey: .isFavorite)
 
         if let date = date {
             try container.encode(

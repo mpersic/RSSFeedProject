@@ -15,29 +15,11 @@ struct SelectFeedPage: View {
 
     var body: some View {
         List {
-            Section(Localizable.enterYourNewFeed.localized()) {
-                TextField("", text: $vm.searchText)
-                    .onSubmit(addToFeedTask)
-                CustomTextField(
-                    text: $vm.searchText,
-                    focusedField: _focusedField,
-                    field: .rssInput,
-                    placeholder: Localizable.rssLink.localized(),
-                    onSubmit: addToFeedTask)
-            }
+            headerInputView()
 
-            Section(Localizable.yourFeeds.localized()) {
-                ForEach(vm.feeds, id: \.title) { feed in
-                    NavigationLink(
-                        destination: FeedItemSelectionPage(feed: feed)
-                    ) {
-                        Text(feed.title ?? "")
-                    }
-                }
-                .onDelete {
-                    vm.removeFeed(at: $0)
-                }
-            }
+            favoritesView()
+
+            feedView()
         }
         .refreshable {
             Task {
@@ -54,7 +36,50 @@ struct SelectFeedPage: View {
         .animation(.default, value: vm.feeds)
     }
 
-    private func addToFeedTask() {
+    @ViewBuilder fileprivate func headerInputView() -> some View {
+        Section(Localizable.enterYourNewFeed.localized()) {
+            TextField("", text: $vm.searchText)
+                .onSubmit(addToFeedTask)
+                .placeholder(when: vm.searchText.isEmpty) {
+                    Text(Localizable.rssLink.localized())
+                }
+        }
+    }
+
+    @ViewBuilder fileprivate func favoritesView() -> some View {
+        if !vm.favorites.isEmpty {
+            Section(Localizable.yourFavorites.localized()) {
+                ForEach(vm.favorites, id: \.title) { feed in
+                    NavigationLink(
+                        destination: FeedItemSelectionPage(feed: feed)
+                    ) {
+                        Text(feed.title ?? "")
+                    }
+                }
+            }
+        }
+    }
+
+    @ViewBuilder fileprivate func feedView() -> some View {
+        Section(Localizable.yourFeeds.localized()) {
+            ForEach(vm.feeds, id: \.title) { feed in
+                NavigationLink(
+                    destination: FeedItemSelectionPage(feed: feed)
+                ) {
+                    SelectFeedItemCell(
+                        feed: feed,
+                        addToFavorites: {
+                            await vm.addFavorite(newItem: $0)
+                        })
+                }
+            }
+            .onDelete {
+                vm.removeFeed(at: $0)
+            }
+        }
+    }
+
+    fileprivate func addToFeedTask() {
         Task {
             await vm.addToFeed()
         }

@@ -34,6 +34,17 @@ class FeedRepository: FeedRepositoryProtocol {
             return .failure(error)
         }
     }
+
+    func addFavoriteToFeed(feed: FeedModel) async -> Result<Void, any Error> {
+        let result = await addToFeed(feed: feed)
+        switch result {
+        case .success(let success):
+            return .success(())
+        case .failure(let failure):
+            return .failure(failure)
+        }
+    }
+
     func clearAllSelectedRSSFeed() -> Result<Void, Error> {
         do {
             let emptyArray = [FeedModel]()
@@ -148,7 +159,17 @@ class FeedRepository: FeedRepositoryProtocol {
         case .success(let feedResult):
             do {
                 var newFeed = feedResult
-                newFeed.append(feed)
+
+                if let index = newFeed.firstIndex(where: {
+                    $0.title == feed.title
+                }) {
+                    newFeed[index].isFavorite = feed.isFavorite
+                    print(
+                        "Toggled isFavorite for existing feed: \(feed.title ?? "Unknown Title")"
+                    )
+                } else {
+                    newFeed.append(feed)
+                }
                 let encodedData = try JSONEncoder().encode(newFeed)
 
                 let documentsDirectory = try FileManager.default.url(
@@ -159,16 +180,17 @@ class FeedRepository: FeedRepositoryProtocol {
 
                 try encodedData.write(to: fileURL)
                 return .success(())
-
             } catch {
                 print("Error saving new feed: \(error)")
                 return .failure(error)
             }
+
         case .failure(let error):
             print("Error getting selected feed: \(error)")
             return .failure(error)
         }
     }
+
     private func parseFeedAsync(_ parser: FeedParser) async -> Result<
         Feed, Error
     > {
