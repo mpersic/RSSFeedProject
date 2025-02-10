@@ -13,9 +13,10 @@ struct FeedItemModel: Equatable, Codable {
     var description: String?
     var date: Date?
     var imageUrl: String?
+    var link: String?
 
     private enum CodingKeys: String, CodingKey {
-        case title, description, date, imageUrl
+        case title, description, date, imageUrl, link
     }
     
     // MARK: - Initializers from FeedKit types
@@ -23,21 +24,23 @@ struct FeedItemModel: Equatable, Codable {
             title = feedItem.title
             description = feedItem.description
             date = feedItem.pubDate
-            imageUrl = feedItem.enclosure?.attributes?.url// Example: Get image from enclosure
+            imageUrl = feedItem.enclosure?.attributes?.url
+            link = feedItem.link
         }
 
         init(feedItem: AtomFeedEntry) {
             title = feedItem.title
-            description = feedItem.updated?.description // Or content, if available
+            description = feedItem.updated?.description
             date = feedItem.updated
-            imageUrl = feedItem.links?.first?.attributes?.href // Example: Get image from link
+            imageUrl = feedItem.links?.first?.attributes?.href
         }
 
         init(feedItem: JSONFeedItem) {
             title = feedItem.title
-            description = feedItem.contentHtml ?? feedItem.contentText // Prefer HTML, fallback to text
+            description = feedItem.contentHtml ?? feedItem.contentText
             date = feedItem.datePublished
-            imageUrl = feedItem.image //Or other image related property
+            imageUrl = feedItem.image
+            link = feedItem.contentHtml
         }
     
 
@@ -46,6 +49,7 @@ struct FeedItemModel: Equatable, Codable {
         title = try container.decodeIfPresent(String.self, forKey: .title)
         description = try container.decodeIfPresent(String.self, forKey: .description)
         imageUrl = try container.decodeIfPresent(String.self, forKey: .imageUrl)
+        link = try container.decodeIfPresent(String.self, forKey: .link)
 
         if let dateString = try container.decodeIfPresent(String.self, forKey: .date) {
             date = Self.dateFormatter.date(from: dateString)
@@ -57,6 +61,7 @@ struct FeedItemModel: Equatable, Codable {
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(description, forKey: .description)
         try container.encodeIfPresent(imageUrl, forKey: .imageUrl)
+        try container.encodeIfPresent(link, forKey: .link)
 
         if let date = date {
             try container.encode(Self.dateFormatter.string(from: date), forKey: .date)

@@ -40,9 +40,9 @@ class SettingsViewModel: ObservableObject {
     func getLocalizableForLanguage(language: Language) -> String {
         switch language {
         case .english:
-            Localizable.croatian
-        case .croatian:
             Localizable.english
+        case .croatian:
+            Localizable.croatian
         }
     }
 
