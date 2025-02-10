@@ -11,7 +11,7 @@ import SwiftUI
 struct RSSFeedProjectApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            SplashView()
         }
     }
 }

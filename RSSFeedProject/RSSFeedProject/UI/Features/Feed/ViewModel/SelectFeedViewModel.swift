@@ -9,8 +9,10 @@ import Factory
 import FeedKit
 import Foundation
 
-class SelectFeedViewModel: ObservableObject {
+class SelectFeedViewModel: BaseViewModel {
 
+    @Published var userInput = ""
+    @Published var favorites: [FeedModel] = []
     @Published var feeds: [FeedModel] = [] {
         didSet {
             onMain { [self] in
@@ -18,27 +20,27 @@ class SelectFeedViewModel: ObservableObject {
             }
         }
     }
-    @Published var favorites: [FeedModel] = []
-    @Published var userInput = ""
     @Injected(\.feedRepository) private var feedRepository
 
-    init() {
+    override init() {
+        super.init()
         Task {
             await loadFeeds()
         }
     }
 
     func addFavorite(newItem: FeedModel) async {
-        var copy = newItem
-        copy.isFavorite.toggle()
+        var itemCopy = newItem
+        itemCopy.isFavorite.toggle()
         Task {
             let result = await feedRepository.addFavoriteToFeed(
-                feed: copy)
+                feed: itemCopy)
             switch result {
             case .success(_):
                 await loadFeeds()
             case .failure(let error):
-                print("Error adding to favorites: \(error)")
+                alertManager.show(
+                    dismiss: .error(message: error.localizedDescription))
             }
         }
     }
@@ -52,7 +54,8 @@ class SelectFeedViewModel: ObservableObject {
                 feeds.append(fetchedFeed)
             }
         case .failure(let error):
-            print("Error loading feed: \(error)")
+            alertManager.show(
+                dismiss: .error(message: error.localizedDescription))
         }
     }
 
@@ -67,7 +70,8 @@ class SelectFeedViewModel: ObservableObject {
                 feeds.append(contentsOf: fetchedFeed)
             }
         case .failure(let error):
-            print("Error loading feeds: \(error)")
+            alertManager.show(
+                dismiss: .error(message: error.localizedDescription))
         }
     }
 
@@ -78,7 +82,8 @@ class SelectFeedViewModel: ObservableObject {
             case .success():
                 await loadFeeds()
             case .failure(let error):
-                print("Error loading feeds: \(error)")
+                alertManager.show(
+                    dismiss: .error(message: error.localizedDescription))
             }
         }
     }

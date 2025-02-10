@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E117E152D5A4A520064F138 /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5E117E142D5A4A520064F138 /* AlertKit */; };
 		5E57624C2D572F1E0034FFDB /* FeedKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5E57624B2D572F1E0034FFDB /* FeedKit */; };
 		5E5762682D573B6C0034FFDB /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 5E5762672D573B6C0034FFDB /* Factory */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 			files = (
 				5E57624C2D572F1E0034FFDB /* FeedKit in Frameworks */,
 				5E5762682D573B6C0034FFDB /* Factory in Frameworks */,
+				5E117E152D5A4A520064F138 /* AlertKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +76,7 @@
 			packageProductDependencies = (
 				5E57624B2D572F1E0034FFDB /* FeedKit */,
 				5E5762672D573B6C0034FFDB /* Factory */,
+				5E117E142D5A4A520064F138 /* AlertKit */,
 			);
 			productName = RSSFeedProject;
 			productReference = 5E5762382D572E5C0034FFDB /* RSSFeedProject.app */;
@@ -107,6 +110,7 @@
 			packageReferences = (
 				5E57624A2D572F1E0034FFDB /* XCRemoteSwiftPackageReference "FeedKit" */,
 				5E5762662D573B6C0034FFDB /* XCRemoteSwiftPackageReference "Factory" */,
+				5E117E132D5A4A520064F138 /* XCRemoteSwiftPackageReference "AlertKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5E5762392D572E5C0034FFDB /* Products */;
@@ -353,6 +357,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5E117E132D5A4A520064F138 /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rebeloper/AlertKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 		5E57624A2D572F1E0034FFDB /* XCRemoteSwiftPackageReference "FeedKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nmdias/FeedKit";
@@ -372,6 +384,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5E117E142D5A4A520064F138 /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5E117E132D5A4A520064F138 /* XCRemoteSwiftPackageReference "AlertKit" */;
+			productName = AlertKit;
+		};
 		5E57624B2D572F1E0034FFDB /* FeedKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5E57624A2D572F1E0034FFDB /* XCRemoteSwiftPackageReference "FeedKit" */;

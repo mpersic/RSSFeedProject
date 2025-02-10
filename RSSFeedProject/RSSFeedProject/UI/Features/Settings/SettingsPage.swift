@@ -20,6 +20,7 @@ struct SettingsPage: View {
 
             chooseLanguage()
         }
+        .uses(vm.alertManager)
     }
 
     @ViewBuilder fileprivate func clearFeed() -> some View {

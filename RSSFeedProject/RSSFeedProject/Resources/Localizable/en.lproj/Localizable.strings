@@ -8,6 +8,7 @@
 "description" = "Description";
 "english" = "English";
 "enter-your-new-feed" = "Enter your new feed";
+"feed-cleared" = "Feed cleared!";
 "feed-settings" = "Feed settings";
 "items" = "Items";
 "home" = "Home";

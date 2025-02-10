@@ -31,6 +31,7 @@ enum Localizable {
     static var chooseALanguage: String { "choose-a-language" }
     static var english: String { "english" }
     static var croatian: String { "croatian" }
+    static var feedCleared: String { "feed-cleared" }
     
     // MARK: - Feed Item Selection Screen
     static var title: String { "title" }

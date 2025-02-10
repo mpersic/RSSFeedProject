@@ -8,6 +8,7 @@
 "description" = "Opis";
 "english" = "Engleski";
 "enter-your-new-feed" = "Unesite svoj novi feed";
+"feed-cleared" = "Feed ociscen!";
 "feed-settings" = "Postavke feeda";
 "home" = "Početna";
 "items" = "Stavke";
