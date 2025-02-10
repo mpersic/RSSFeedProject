@@ -14,7 +14,7 @@ extension Container {
     var mainVM: Factory<MainViewModel> {
         self { MainViewModel() }
     }
-    
+
     var selectFeedVM: Factory<SelectFeedViewModel> {
         self { SelectFeedViewModel() }
     }
@@ -22,9 +22,16 @@ extension Container {
     var settingsVM: Factory<SettingsViewModel> {
         self { SettingsViewModel() }
     }
-    
+
     var splashVM: Factory<SplashViewModel> {
         self { SplashViewModel() }
+    }
+}
+
+// MARK: - register services
+extension Container {
+    var feedService: Factory<FeedServiceProtocol> {
+        self { FeedService() }
     }
 }
 

@@ -15,10 +15,10 @@ class SettingsViewModel: BaseViewModel {
         .system
     @AppStorage("language")
     var language = LocalizationService.shared.language
-    @Injected(\.feedRepository) private var feedRepository
+    @Injected(\.feedService) private var feedService
 
     func clearFeed() {
-        let result = feedRepository.clearAllSelectedRSSFeed()
+        let result = feedService.clearAllSelectedRSSFeed()
         switch result {
         case .failure(let failure):
             alertManager.show(
