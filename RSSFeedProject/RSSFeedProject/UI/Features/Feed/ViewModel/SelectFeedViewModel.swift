@@ -26,6 +26,7 @@ class SelectFeedViewModel: BaseViewModel {
         super.init()
         Task {
             await loadFeeds()
+            await feedService.setCachedRSSFeed(feeds: feeds)
         }
     }
 
@@ -73,7 +74,7 @@ class SelectFeedViewModel: BaseViewModel {
         onMain { [self] in
             feeds = []
         }
-        let result = await feedService.getSelectedRSSFeed()
+        let result = await feedService.getRSSFeed()
         switch result {
         case .success(let fetchedFeed):
             onMain { [self] in

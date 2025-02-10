@@ -11,6 +11,7 @@ import Foundation
 class FeedRepository: FeedRepositoryProtocol {
 
     private let feedFilename = "feed.json"
+    private let cachedFeedFilename = "cachedFeed.json"
 
     func addNewRSSFeed(feed: String) async -> Result<FeedModel, Error> {
         guard let url = URL(string: feed) else {
@@ -46,7 +47,7 @@ class FeedRepository: FeedRepositoryProtocol {
     }
     
     func removeItemFromFeed(at offset: IndexSet) async -> Result<Void, any Error> {
-        let result = await getSelectedRSSFeed()
+        let result = await getRSSFeed()
         switch result {
         case .success(let feedResult):
             do {
@@ -88,7 +89,7 @@ class FeedRepository: FeedRepositoryProtocol {
         }
     }
 
-    func getSelectedRSSFeed() async -> Result<[FeedModel], Error> {
+    func getRSSFeed() async -> Result<[FeedModel], Error> {
         do {
             let documentsDirectory = try FileManager.default.url(
                 for: .documentDirectory, in: .userDomainMask,
@@ -112,8 +113,49 @@ class FeedRepository: FeedRepositoryProtocol {
         }
     }
     
+    func getCachedRSSFeed() async -> Result<[FeedModel], Error> {
+        do {
+            let documentsDirectory = try FileManager.default.url(
+                for: .documentDirectory, in: .userDomainMask,
+                appropriateFor: nil, create: false)
+            let fileURL = documentsDirectory.appendingPathComponent(
+                cachedFeedFilename)
+
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                let data = try Data(contentsOf: fileURL)
+
+                if let decodedFeeds = try? JSONDecoder().decode(
+                    [FeedModel].self, from: data)
+                {
+                    return .success(decodedFeeds)
+                }
+            }
+            return .success([])
+
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    func setCachedRSSFeed(feeds: [FeedModel]) async{
+        do {
+            let documentsDirectory = try FileManager.default.url(
+                for: .documentDirectory, in: .userDomainMask,
+                appropriateFor: nil, create: false)
+            let fileURL = documentsDirectory.appendingPathComponent(
+                cachedFeedFilename)
+
+            let encodedData = try JSONEncoder().encode(feeds)
+
+            try encodedData.write(to: fileURL)
+
+        } catch {
+        }
+    }
+
+    
     private func addToFeed(feed: FeedModel) async -> Result<Void, Error> {
-        let result = await getSelectedRSSFeed()
+        let result = await getRSSFeed()
         switch result {
         case .success(let feedResult):
             do {
