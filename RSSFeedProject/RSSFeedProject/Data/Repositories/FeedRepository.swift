@@ -38,8 +38,32 @@ class FeedRepository: FeedRepositoryProtocol {
     func addFavoriteToFeed(feed: FeedModel) async -> Result<Void, any Error> {
         let result = await addToFeed(feed: feed)
         switch result {
-        case .success(let success):
+        case .success(_):
             return .success(())
+        case .failure(let failure):
+            return .failure(failure)
+        }
+    }
+    
+    func removeItemFromFeed(at offset: IndexSet) async -> Result<Void, any Error> {
+        let result = await getSelectedRSSFeed()
+        switch result {
+        case .success(let feedResult):
+            do {
+                var newFeed = feedResult
+                newFeed.remove(atOffsets: offset)
+                let encodedData = try JSONEncoder().encode(newFeed)
+                
+                let documentsDirectory = try FileManager.default.url(
+                    for: .documentDirectory, in: .userDomainMask,
+                    appropriateFor: nil, create: false)
+                let fileURL = documentsDirectory.appendingPathComponent(
+                    feedFilename)
+                try encodedData.write(to: fileURL)
+                return .success(())}
+            catch{
+                return .failure(error)
+            }
         case .failure(let failure):
             return .failure(failure)
         }
@@ -75,37 +99,11 @@ class FeedRepository: FeedRepositoryProtocol {
             if FileManager.default.fileExists(atPath: fileURL.path) {
                 let data = try Data(contentsOf: fileURL)
 
-                // 1. Try decoding as an array first (most common case):
                 if let decodedFeeds = try? JSONDecoder().decode(
                     [FeedModel].self, from: data)
                 {
                     return .success(decodedFeeds)
                 }
-
-                // 2. If that fails, try decoding as a dictionary (for single feeds or keyed feeds):
-                if let decodedDictionary = try? JSONDecoder().decode(
-                    [String: FeedModel].self, from: data)
-                {
-                    let feeds = Array(decodedDictionary.values)  // Convert dictionary values to an array
-                    return .success(feeds)
-                }
-
-                // 3. If that also fails, it might be a single FeedModel
-                if let decodedFeed = try? JSONDecoder().decode(
-                    FeedModel.self, from: data)
-                {
-                    return .success([decodedFeed])
-                }
-
-                // 3. If both fail, the data is corrupt or in an unexpected format:
-                return .failure(
-                    NSError(
-                        domain: "YourAppDomain", code: 0,
-                        userInfo: [
-                            NSLocalizedDescriptionKey:
-                                "Invalid feed data format."
-                        ]))  // Provide a more specific error
-
             }
             return .success([])
 
@@ -113,46 +111,7 @@ class FeedRepository: FeedRepositoryProtocol {
             return .failure(error)
         }
     }
-
-    //get feeds from urls
-    /*func getFeeds() async -> Result<[FeedModel], Error> {
-        var feeds: [FeedModel] = []
-        var firstError: Error?
-
-        await withTaskGroup(of: Result<Feed, Error>.self) { group in
-            for urlString in Constants.feedURLs {
-                group.addTask { [self] in
-                    guard let url = URL(string: urlString) else {
-                        return .failure(URLError(.badURL))
-                    }
-
-                    let parser = FeedParser(URL: url)
-                    return await parseFeedAsync(parser)
-                }
-            }
-
-            for await result in group {
-                switch result {
-                case let .success(feed):
-                    feeds.append(FeedModel(feed: feed))
-                case let .failure(error):
-                    if firstError == nil {
-                        firstError = error
-                    }
-                    print("Failed to load feed: \(error)")
-                }
-            }
-        }
-
-        if !feeds.isEmpty {
-            return .success(feeds)
-        } else if let error = firstError {
-            return .failure(error)
-        } else {
-            return .failure(URLError(.unknown))
-        }
-    }*/
-
+    
     private func addToFeed(feed: FeedModel) async -> Result<Void, Error> {
         let result = await getSelectedRSSFeed()
         switch result {
@@ -164,8 +123,7 @@ class FeedRepository: FeedRepositoryProtocol {
                     $0.title == feed.title
                 }) {
                     newFeed[index].isFavorite = feed.isFavorite
-                    print(
-                        "Toggled isFavorite for existing feed: \(feed.title ?? "Unknown Title")"
+                    print("Toggled isFavorite for existing feed: \(feed.title ?? "Unknown Title")"
                     )
                 } else {
                     newFeed.append(feed)

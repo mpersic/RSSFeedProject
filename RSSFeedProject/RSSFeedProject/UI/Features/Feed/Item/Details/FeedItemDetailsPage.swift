@@ -13,7 +13,7 @@ struct FeedItemDetailsPage: View {
 
     var body: some View {
         List {
-            Section("Title") {
+            Section(Localizable.title.localized()) {
                 Text(item.title ?? "-")
             }
             if let imageUrl = item.imageUrl {
@@ -26,16 +26,18 @@ struct FeedItemDetailsPage: View {
                 .frame(width: imageFrameWidth)
                 .clipShape(.rect(cornerRadius: Dimensions.cornerRadius))
             }
-            Section("Date") {
+            Section(Localizable.date.localized()) {
                 Text(item.date?.description ?? "-")
             }
-            Section("Description") {
+            Section(Localizable.description.localized()) {
                 Text(item.description ?? "-")
             }
             if let link = item.link, let url = URL(string: link) {
-                Section("Link") {
-                    Link("Open in Browser", destination: url)
-                        .foregroundColor(.blue)
+                Section(Localizable.link.localized()) {
+                    Link(
+                        Localizable.openInBrowser.localized(), destination: url
+                    )
+                    .foregroundColor(Colors.blue)
                 }
             }
         }.listStyle(.automatic)

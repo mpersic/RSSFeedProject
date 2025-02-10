@@ -23,7 +23,8 @@ struct SelectFeedItemCell: View {
                 }
             }) {
                 Image(systemName: feed.isFavorite ? "heart.fill" : "heart")
-                    .foregroundColor(feed.isFavorite ? .blue : .gray)
+                    .foregroundColor(
+                        feed.isFavorite ? Colors.blue : Colors.gray)
             }
             .buttonStyle(PlainButtonStyle())
         }

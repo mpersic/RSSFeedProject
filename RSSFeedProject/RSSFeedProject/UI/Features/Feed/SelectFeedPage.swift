@@ -11,7 +11,6 @@ import SwiftUI
 struct SelectFeedPage: View {
 
     @InjectedObject(\.selectFeedVM) private var vm
-    @FocusState private var focusedField: FocusedField?
 
     var body: some View {
         List {
@@ -26,21 +25,14 @@ struct SelectFeedPage: View {
                 await vm.loadFeeds()
             }
         }
-        .onAppear {
-            Task {
-                if vm.feeds.isEmpty {
-                    await vm.loadFeeds()
-                }
-            }
-        }
         .animation(.default, value: vm.feeds)
     }
 
     @ViewBuilder fileprivate func headerInputView() -> some View {
         Section(Localizable.enterYourNewFeed.localized()) {
-            TextField("", text: $vm.searchText)
+            TextField("", text: $vm.userInput)
                 .onSubmit(addToFeedTask)
-                .placeholder(when: vm.searchText.isEmpty) {
+                .placeholder(when: vm.userInput.isEmpty) {
                     Text(Localizable.rssLink.localized())
                 }
         }
@@ -61,20 +53,24 @@ struct SelectFeedPage: View {
     }
 
     @ViewBuilder fileprivate func feedView() -> some View {
-        Section(Localizable.yourFeeds.localized()) {
-            ForEach(vm.feeds, id: \.title) { feed in
-                NavigationLink(
-                    destination: FeedItemSelectionPage(feed: feed)
-                ) {
-                    SelectFeedItemCell(
-                        feed: feed,
-                        addToFavorites: {
-                            await vm.addFavorite(newItem: $0)
-                        })
+        if vm.feeds.isEmpty {
+            Text(Localizable.noFeedsAddedAddYourFeedsAbove.localized())
+        } else {
+            Section(Localizable.yourFeeds.localized()) {
+                ForEach(vm.feeds, id: \.title) { feed in
+                    NavigationLink(
+                        destination: FeedItemSelectionPage(feed: feed)
+                    ) {
+                        SelectFeedItemCell(
+                            feed: feed,
+                            addToFavorites: {
+                                await vm.addFavorite(newItem: $0)
+                            })
+                    }
                 }
-            }
-            .onDelete {
-                vm.removeFeed(at: $0)
+                .onDelete {
+                    vm.removeFeed(at: $0)
+                }
             }
         }
     }

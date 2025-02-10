@@ -11,7 +11,6 @@ import Foundation
 
 class SelectFeedViewModel: ObservableObject {
 
-    @Injected(\.feedRepository) private var feedRepository
     @Published var feeds: [FeedModel] = [] {
         didSet {
             onMain { [self] in
@@ -20,15 +19,13 @@ class SelectFeedViewModel: ObservableObject {
         }
     }
     @Published var favorites: [FeedModel] = []
-    @Published var searchText = ""
+    @Published var userInput = ""
+    @Injected(\.feedRepository) private var feedRepository
 
     init() {
-        /*Task {
-            searchText = "https://www.9to5mac.com/feed/"
-            await addToFeed()
-            searchText = "https://www.digitaltrends.com/feed/"
-            await addToFeed()
-        }*/
+        Task {
+            await loadFeeds()
+        }
     }
 
     func addFavorite(newItem: FeedModel) async {
@@ -38,7 +35,7 @@ class SelectFeedViewModel: ObservableObject {
             let result = await feedRepository.addFavoriteToFeed(
                 feed: copy)
             switch result {
-            case .success(let fetchedFeed):
+            case .success(_):
                 await loadFeeds()
             case .failure(let error):
                 print("Error adding to favorites: \(error)")
@@ -48,7 +45,7 @@ class SelectFeedViewModel: ObservableObject {
 
     func addToFeed() async {
         let result = await feedRepository.addNewRSSFeed(
-            feed: searchText)
+            feed: userInput)
         switch result {
         case .success(let fetchedFeed):
             onMain { [self] in
@@ -75,25 +72,14 @@ class SelectFeedViewModel: ObservableObject {
     }
 
     func removeFeed(at offset: IndexSet) {
-        onMain { [self] in
-            feeds.remove(atOffsets: offset)
+        Task {
+            let result = await feedRepository.removeItemFromFeed(at: offset)
+            switch result {
+            case .success():
+                await loadFeeds()
+            case .failure(let error):
+                print("Error loading feeds: \(error)")
+            }
         }
     }
-
-    //    func loadFeeds() async {
-    //        onMain { [self] in
-    //            feeds = []
-    //        }
-    //
-    //        let result = await feedRepository.getFeeds()
-    //
-    //        switch result {
-    //        case .success(let fetchedFeeds):
-    //            onMain { [self] in
-    //                feeds = fetchedFeeds
-    //            }
-    //        case .failure(let error):
-    //            print("Error loading feeds: \(error)")
-    //        }
-    //    }
 }

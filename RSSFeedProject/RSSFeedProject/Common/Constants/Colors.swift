@@ -11,4 +11,6 @@ import UIKit
 class Colors {
     static let white50 = Color(UIColor(named: "white50")!)
     static let white = Color(UIColor(named: "white")!)
+    static let blue = Color.blue
+    static let gray = Color.gray
 }

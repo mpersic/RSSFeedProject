@@ -13,13 +13,13 @@ struct FeedItemSelectionPage: View {
 
     var body: some View {
         List {
-            Section("Title") {
+            Section(Localizable.title.localized()) {
                 Text(feed.title ?? "-")
             }
-            Section("Description") {
+            Section(Localizable.description.localized()) {
                 Text(feed.description ?? "-")
             }
-            Section("Items") {
+            Section(Localizable.items.localized()) {
                 ForEach(feed.items ?? [], id: \.title) { item in
                     NavigationLink(destination: FeedItemDetailsPage(item: item)) {
                         Text(item.title ?? "-")
