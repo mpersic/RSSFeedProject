@@ -9,6 +9,10 @@ import UIKit
 
 extension String {
 
+    func trim() -> String {
+        return self.trimmingCharacters(in: .whitespaces)
+    }
+
     /// Localizes a string using given language from Language enum.
     /// - parameter language: The language that will be used to localized string.
     /// - Returns: localized string.

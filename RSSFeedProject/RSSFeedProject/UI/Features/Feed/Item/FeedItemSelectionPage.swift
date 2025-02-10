@@ -16,12 +16,15 @@ struct FeedItemSelectionPage: View {
             Section(Localizable.title.localized()) {
                 Text(feed.title ?? "-")
             }
-            Section(Localizable.description.localized()) {
-                Text(feed.description ?? "-")
+            if let description = feed.description, !description.trim().isEmpty {
+                Section(Localizable.description.localized()) {
+                    Text(description)
+                }
             }
             Section(Localizable.items.localized()) {
                 ForEach(feed.items ?? [], id: \.title) { item in
-                    NavigationLink(destination: FeedItemDetailsPage(item: item)) {
+                    NavigationLink(destination: FeedItemDetailsPage(item: item))
+                    {
                         Text(item.title ?? "-")
                     }
                 }
