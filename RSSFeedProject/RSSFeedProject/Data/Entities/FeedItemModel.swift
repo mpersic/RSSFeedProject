@@ -52,7 +52,7 @@ struct FeedItemModel: Equatable, Codable {
         link = try container.decodeIfPresent(String.self, forKey: .link)
 
         if let dateString = try container.decodeIfPresent(String.self, forKey: .date) {
-            date = Self.dateFormatter.date(from: dateString)
+            date = DateFormatter.defaultFormat.date(from: dateString)
         }
     }
 
@@ -64,15 +64,8 @@ struct FeedItemModel: Equatable, Codable {
         try container.encodeIfPresent(link, forKey: .link)
 
         if let date = date {
-            try container.encode(Self.dateFormatter.string(from: date), forKey: .date)
+            try container.encode(DateFormatter.defaultFormat.string(from: date), forKey: .date)
         }
     }
-
-    private static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter
-    }()
 }
 
