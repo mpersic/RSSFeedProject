@@ -13,15 +13,13 @@ struct SplashView: View {
     @InjectedObject(\.splashVM) private var vm
 
     var body: some View {
-        ZStack {
-            if vm.isFinished {
-                MainView()
-            } else {
-                Image(systemName: Images.newspaper)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: vm.iconHeight)
-            }
+        if vm.isFinished {
+            MainView()
+        } else {
+            Image(systemName: Images.newspaper)
+                .resizable()
+                .scaledToFit()
+                .frame(height: vm.iconHeight)
         }
     }
 }
