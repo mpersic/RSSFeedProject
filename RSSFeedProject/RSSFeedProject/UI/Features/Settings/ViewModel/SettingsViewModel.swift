@@ -5,10 +5,10 @@
 //  Created by Matej Persic on 08.02.2025..
 //
 
+import AlertKit
 import Factory
 import Foundation
 import SwiftUI
-import AlertKit
 
 class SettingsViewModel: BaseViewModel {
     @AppStorage("appearance") var selectedAppearance: Appearance =
@@ -21,9 +21,11 @@ class SettingsViewModel: BaseViewModel {
         let result = feedRepository.clearAllSelectedRSSFeed()
         switch result {
         case .failure(let failure):
-            alertManager.show(dismiss: .error(message: failure.localizedDescription))
+            alertManager.show(
+                dismiss: .error(message: failure.localizedDescription))
         default:
-            alertManager.show(dismiss: .success(message: Localizable.feedCleared.localized()))
+            alertManager.show(
+                dismiss: .success(message: Localizable.feedCleared.localized()))
             break
         }
     }
@@ -45,6 +47,12 @@ class SettingsViewModel: BaseViewModel {
             Localizable.english
         case .croatian:
             Localizable.croatian
+        }
+    }
+
+    func openAppSettings() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 

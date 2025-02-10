@@ -9,6 +9,16 @@ import SwiftUI
 
 @main
 struct RSSFeedProjectApp: App {
+
+    private let notificationDelegate = NotificationDelegate()
+
+    init() {
+        UNUserNotificationCenter.current().delegate = notificationDelegate
+        Task {
+            await NotificationManager.initialize()
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             SplashView()
