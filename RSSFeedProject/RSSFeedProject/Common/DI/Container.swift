@@ -14,22 +14,20 @@ extension Container {
     var mainVM: Factory<MainViewModel> {
         self { MainViewModel() }
     }
-}
+    
+    var selectFeedVM: Factory<SelectFeedViewModel> {
+        self { SelectFeedViewModel() }
+    }
 
-// MARK: - register services
-
-extension Container {
+    var settingsVM: Factory<SettingsViewModel> {
+        self { SettingsViewModel() }
+    }
 }
 
 // MARK: - register repositories
 
 extension Container {
-    var feedRepository: Factory<FeedRepository> {
+    var feedRepository: Factory<FeedRepositoryProtocol> {
         self { FeedRepository() }
     }
-}
-
-// MARK: register coordinator
-
-extension Container {
 }
