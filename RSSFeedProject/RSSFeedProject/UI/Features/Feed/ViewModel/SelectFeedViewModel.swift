@@ -46,6 +46,16 @@ class SelectFeedViewModel: BaseViewModel {
     }
 
     func addToFeed() async {
+        if userInput.isEmpty {
+            return
+        }
+        if !getIsConnectedToInternet() {
+            alertManager.show(
+                dismiss: .error(
+                    message: Localizable.internetConnectionRequired.localized())
+            )
+            return
+        }
         let result = await feedRepository.addNewRSSFeed(
             feed: userInput)
         switch result {

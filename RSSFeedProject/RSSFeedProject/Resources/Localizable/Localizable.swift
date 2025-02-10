@@ -15,6 +15,7 @@ enum Localizable {
     static var rssViewer: String { "rss-viewer" }
 
     // MARK: - Feed Screen
+    static var internetConnectionRequired: String { "internet-connection-required" }
     static var enterYourNewFeed: String { "enter-your-new-feed" }
     static var rssLink: String { "rss-link" }
     static var yourFeeds: String { "your-feeds" }

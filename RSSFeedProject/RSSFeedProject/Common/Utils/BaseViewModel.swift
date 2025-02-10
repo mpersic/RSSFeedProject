@@ -11,4 +11,9 @@ import SwiftUICore
 
 class BaseViewModel: ObservableObject {
     @ObservedObject var alertManager = AlertManager()
+    @ObservedObject var networkMonitor = NetworkMonitor.shared
+
+    func getIsConnectedToInternet() -> Bool {
+        return networkMonitor.isConnected
+    }
 }
