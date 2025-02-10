@@ -22,6 +22,10 @@ extension Container {
     var settingsVM: Factory<SettingsViewModel> {
         self { SettingsViewModel() }
     }
+    
+    var splashVM: Factory<SplashViewModel> {
+        self { SplashViewModel() }
+    }
 }
 
 // MARK: - register repositories

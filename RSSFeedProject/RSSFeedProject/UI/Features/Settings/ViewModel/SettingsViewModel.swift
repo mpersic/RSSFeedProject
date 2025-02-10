@@ -8,8 +8,9 @@
 import Factory
 import Foundation
 import SwiftUI
+import AlertKit
 
-class SettingsViewModel: ObservableObject {
+class SettingsViewModel: BaseViewModel {
     @AppStorage("appearance") var selectedAppearance: Appearance =
         .system
     @AppStorage("language")
@@ -20,8 +21,9 @@ class SettingsViewModel: ObservableObject {
         let result = feedRepository.clearAllSelectedRSSFeed()
         switch result {
         case .failure(let failure):
-            print(failure.localizedDescription)
+            alertManager.show(dismiss: .error(message: failure.localizedDescription))
         default:
+            alertManager.show(dismiss: .success(message: Localizable.feedCleared.localized()))
             break
         }
     }

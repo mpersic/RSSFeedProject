@@ -13,29 +13,33 @@ struct FeedItemDetailsPage: View {
 
     var body: some View {
         List {
-            Section("Title") {
+            Section("") {
                 Text(item.title ?? "-")
-            }
-            if let imageUrl = item.imageUrl {
-                AsyncImage(url: URL(string: imageUrl)) { image in
-                    image.resizable()
-                } placeholder: {
-                    ProgressView()
+                    .font(.title)
+
+                if let imageUrl = item.imageUrl {
+                    AsyncImage(url: URL(string: imageUrl)) { image in
+                        image.resizable()
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .scaledToFit()
+                    .frame(width: imageFrameWidth)
+                    .clipShape(.rect(cornerRadius: Dimensions.cornerRadius))
                 }
-                .scaledToFit()
-                .frame(width: imageFrameWidth)
-                .clipShape(.rect(cornerRadius: Dimensions.cornerRadius))
+
+                Text(item.description?.trim() ?? "-")
+                    .multilineTextAlignment(.leading)
             }
-            Section("Date") {
+            Section(Localizable.date.localized()) {
                 Text(item.date?.description ?? "-")
             }
-            Section("Description") {
-                Text(item.description ?? "-")
-            }
             if let link = item.link, let url = URL(string: link) {
-                Section("Link") {
-                    Link("Open in Browser", destination: url)
-                        .foregroundColor(.blue)
+                Section(Localizable.link.localized()) {
+                    Link(
+                        Localizable.openInBrowser.localized(), destination: url
+                    )
+                    .foregroundColor(Colors.blue)
                 }
             }
         }.listStyle(.automatic)

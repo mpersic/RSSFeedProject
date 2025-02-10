@@ -15,10 +15,12 @@ enum Localizable {
     static var rssViewer: String { "rss-viewer" }
 
     // MARK: - Feed Screen
+    static var internetConnectionRequired: String { "internet-connection-required" }
     static var enterYourNewFeed: String { "enter-your-new-feed" }
     static var rssLink: String { "rss-link" }
     static var yourFeeds: String { "your-feeds" }
     static var yourFavorites: String { "your-favorites" }
+    static var noFeedsAddedAddYourFeedsAbove: String { "no-feeds-added-add-your-feeds-above" }
 
     // MARK: - Settings Screen
     static var feedSettings: String { "feed-settings" }
@@ -30,10 +32,18 @@ enum Localizable {
     static var chooseALanguage: String { "choose-a-language" }
     static var english: String { "english" }
     static var croatian: String { "croatian" }
+    static var feedCleared: String { "feed-cleared" }
     
-    // MARK: - Splash Screen
-    static var splashScreenWelcome: String { "splash-screen-welcome" }
+    // MARK: - Feed Item Selection Screen
+    static var title: String { "title" }
+    static var description: String { "description" }
+    static var items: String { "items" }
 
+    // MARK: - Feed Item Selection Screen
+    static var date: String { "date" }
+    static var link: String { "link" }
+    static var openInBrowser: String { "open-in-browser" }
+    
     // MARK: - Onboarding
     static var darkMode: String { "dark-mode" }
 

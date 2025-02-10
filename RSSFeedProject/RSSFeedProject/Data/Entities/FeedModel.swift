@@ -73,7 +73,7 @@ struct FeedModel: Equatable, Codable {
         if let dateString = try container.decodeIfPresent(
             String.self, forKey: .date)
         {
-            date = Self.dateFormatter.date(from: dateString)
+            date = DateFormatter.defaultFormat.date(from: dateString)
         }
     }
 
@@ -86,15 +86,7 @@ struct FeedModel: Equatable, Codable {
 
         if let date = date {
             try container.encode(
-                Self.dateFormatter.string(from: date), forKey: .date)
+                DateFormatter.defaultFormat.string(from: date), forKey: .date)
         }
     }
-
-    // MARK: - Date Formatter
-    private static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"  // ISO 8601 format
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter
-    }()
 }

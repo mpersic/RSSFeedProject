@@ -13,4 +13,5 @@ protocol FeedRepositoryProtocol {
     func clearAllSelectedRSSFeed() -> Result<Void, Error>
     func getSelectedRSSFeed() async -> Result<[FeedModel], Error>
     func addFavoriteToFeed(feed: FeedModel) async -> Result<Void, Error>
+    func removeItemFromFeed(at offset: IndexSet) async -> Result<Void, any Error>
 }

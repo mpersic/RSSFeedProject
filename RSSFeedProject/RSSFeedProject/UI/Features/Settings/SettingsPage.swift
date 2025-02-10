@@ -14,40 +14,53 @@ struct SettingsPage: View {
 
     var body: some View {
         List {
-            Section(Localizable.feedSettings.localized()) {
-                Text(Localizable.clearFeed.localized())
-                    .onTapGesture {
-                        vm.clearFeed()
-                    }
-            }
+            clearFeed()
 
-            Section(Localizable.darkMode.localized()) {
-                Picker(
-                    Localizable.appearance.localized(),
-                    selection: $vm.selectedAppearance
-                ) {
-                    ForEach(Appearance.allCases) {
-                        Text(
-                            vm.getLocalizableForAppearance(appearance: $0)
-                                .localized()
-                        )
-                        .tag($0)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-            }
+            chooseAppearance()
 
-            Section(Localizable.chooseALanguage.localized()) {
-                Picker("", selection: $vm.language) {
-                    ForEach(Language.allCases) {
-                        Text(
-                            vm.getLocalizableForLanguage(language: $0)
-                                .localized()
-                        ).tag($0)
-                    }
+            chooseLanguage()
+        }
+        .uses(vm.alertManager)
+    }
+
+    @ViewBuilder fileprivate func clearFeed() -> some View {
+        Section(Localizable.feedSettings.localized()) {
+            Text(Localizable.clearFeed.localized())
+                .onTapGesture {
+                    vm.clearFeed()
                 }
-                .pickerStyle(SegmentedPickerStyle())
+        }
+    }
+
+    @ViewBuilder fileprivate func chooseAppearance() -> some View {
+        Section(Localizable.darkMode.localized()) {
+            Picker(
+                Localizable.appearance.localized(),
+                selection: $vm.selectedAppearance
+            ) {
+                ForEach(Appearance.allCases) {
+                    Text(
+                        vm.getLocalizableForAppearance(appearance: $0)
+                            .localized()
+                    )
+                    .tag($0)
+                }
             }
+            .pickerStyle(SegmentedPickerStyle())
+        }
+    }
+
+    @ViewBuilder fileprivate func chooseLanguage() -> some View {
+        Section(Localizable.chooseALanguage.localized()) {
+            Picker("", selection: $vm.language) {
+                ForEach(Language.allCases) {
+                    Text(
+                        vm.getLocalizableForLanguage(language: $0)
+                            .localized()
+                    ).tag($0)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
         }
     }
 }

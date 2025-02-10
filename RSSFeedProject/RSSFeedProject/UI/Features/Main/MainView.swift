@@ -9,7 +9,7 @@ import Factory
 import FeedKit
 import SwiftUI
 
-struct MainPage: View {
+struct MainView: View {
 
     @InjectedObject(\.mainVM) private var vm
 
@@ -20,14 +20,14 @@ struct MainPage: View {
                     .tabItem {
                         Label(
                             Localizable.home.localized(vm.language),
-                            systemImage: "newspaper.fill")
+                            systemImage: Images.newspaper)
                     }
 
                 SettingsPage()
                     .tabItem {
                         Label(
                             Localizable.settings.localized(vm.language),
-                            systemImage: "gearshape.fill")
+                            systemImage: Images.gearshape)
                     }
             }
             .navigationTitle(Localizable.rssViewer.localized(vm.language))
@@ -37,5 +37,5 @@ struct MainPage: View {
 }
 
 #Preview {
-    MainPage()
+    MainView()
 }

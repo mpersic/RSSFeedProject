@@ -9,9 +9,10 @@ import Factory
 import FeedKit
 import Foundation
 
-class SelectFeedViewModel: ObservableObject {
+class SelectFeedViewModel: BaseViewModel {
 
-    @Injected(\.feedRepository) private var feedRepository
+    @Published var userInput = ""
+    @Published var favorites: [FeedModel] = []
     @Published var feeds: [FeedModel] = [] {
         didSet {
             onMain { [self] in
@@ -19,43 +20,52 @@ class SelectFeedViewModel: ObservableObject {
             }
         }
     }
-    @Published var favorites: [FeedModel] = []
-    @Published var searchText = ""
+    @Injected(\.feedRepository) private var feedRepository
 
-    init() {
-        /*Task {
-            searchText = "https://www.9to5mac.com/feed/"
-            await addToFeed()
-            searchText = "https://www.digitaltrends.com/feed/"
-            await addToFeed()
-        }*/
+    override init() {
+        super.init()
+        Task {
+            await loadFeeds()
+        }
     }
 
     func addFavorite(newItem: FeedModel) async {
-        var copy = newItem
-        copy.isFavorite.toggle()
+        var itemCopy = newItem
+        itemCopy.isFavorite.toggle()
         Task {
             let result = await feedRepository.addFavoriteToFeed(
-                feed: copy)
+                feed: itemCopy)
             switch result {
-            case .success(let fetchedFeed):
+            case .success(_):
                 await loadFeeds()
             case .failure(let error):
-                print("Error adding to favorites: \(error)")
+                alertManager.show(
+                    dismiss: .error(message: error.localizedDescription))
             }
         }
     }
 
     func addToFeed() async {
+        if userInput.isEmpty {
+            return
+        }
+        if !getIsConnectedToInternet() {
+            alertManager.show(
+                dismiss: .error(
+                    message: Localizable.internetConnectionRequired.localized())
+            )
+            return
+        }
         let result = await feedRepository.addNewRSSFeed(
-            feed: searchText)
+            feed: userInput)
         switch result {
         case .success(let fetchedFeed):
             onMain { [self] in
                 feeds.append(fetchedFeed)
             }
         case .failure(let error):
-            print("Error loading feed: \(error)")
+            alertManager.show(
+                dismiss: .error(message: error.localizedDescription))
         }
     }
 
@@ -70,30 +80,21 @@ class SelectFeedViewModel: ObservableObject {
                 feeds.append(contentsOf: fetchedFeed)
             }
         case .failure(let error):
-            print("Error loading feeds: \(error)")
+            alertManager.show(
+                dismiss: .error(message: error.localizedDescription))
         }
     }
 
     func removeFeed(at offset: IndexSet) {
-        onMain { [self] in
-            feeds.remove(atOffsets: offset)
+        Task {
+            let result = await feedRepository.removeItemFromFeed(at: offset)
+            switch result {
+            case .success():
+                await loadFeeds()
+            case .failure(let error):
+                alertManager.show(
+                    dismiss: .error(message: error.localizedDescription))
+            }
         }
     }
-
-    //    func loadFeeds() async {
-    //        onMain { [self] in
-    //            feeds = []
-    //        }
-    //
-    //        let result = await feedRepository.getFeeds()
-    //
-    //        switch result {
-    //        case .success(let fetchedFeeds):
-    //            onMain { [self] in
-    //                feeds = fetchedFeeds
-    //            }
-    //        case .failure(let error):
-    //            print("Error loading feeds: \(error)")
-    //        }
-    //    }
 }
