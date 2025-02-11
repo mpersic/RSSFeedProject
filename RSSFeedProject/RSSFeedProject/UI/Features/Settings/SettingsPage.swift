@@ -19,6 +19,8 @@ struct SettingsPage: View {
             chooseAppearance()
 
             chooseLanguage()
+
+            toggleNotifications()
         }
         .uses(vm.alertManager)
     }
@@ -61,6 +63,33 @@ struct SettingsPage: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
+        }
+    }
+
+    @ViewBuilder fileprivate func toggleNotifications() -> some View {
+        Section("Notifications") {
+            VStack {
+//                Button("Send Test Notification") {
+//                    Task {
+//                        let isEnabled =
+//                            await NotificationManager.isNotificationsEnabled()
+//                        if isEnabled {
+//                            await NotificationManager.scheduleLocalNotification(
+//                                id: "test_notification",
+//                                title: "Meeting Reminder",
+//                                body:
+//                                    "You have a meeting invitation. Check your app for details.",
+//                                interval: 5
+//                            )
+//                        } else {
+//                            showAlert = true
+//                        }
+//                    }
+//                }
+                Button("Manage Notifications") {
+                    vm.openAppSettings()
+                }
+            }
         }
     }
 }

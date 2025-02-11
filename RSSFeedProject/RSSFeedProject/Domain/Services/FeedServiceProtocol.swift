@@ -1,13 +1,13 @@
 //
-//  FeedRepositoryProtocol.swift
+//  FeedServiceProtocol.swift
 //  RSSFeedProject
 //
-//  Created by Matej Persic on 08.02.2025..
+//  Created by Matej Persic on 10.02.2025..
 //
 
 import Foundation
 
-protocol FeedRepositoryProtocol {
+protocol FeedServiceProtocol {
 
     func addNewRSSFeed(feed: String) async -> Result<FeedModel, Error>
     func clearAllSelectedRSSFeed() -> Result<Void, Error>
@@ -15,5 +15,6 @@ protocol FeedRepositoryProtocol {
     func addFavoriteToFeed(feed: FeedModel) async -> Result<Void, Error>
     func removeItemFromFeed(at offset: IndexSet) async -> Result<Void, any Error>
     func getCachedRSSFeed() async -> Result<[FeedModel], Error>
-    func setCachedRSSFeed(feeds: [FeedModel]) async 
+    func setCachedRSSFeed(feeds: [FeedModel]) async
+    func getDifferentItems() async -> [FeedItemModel] 
 }

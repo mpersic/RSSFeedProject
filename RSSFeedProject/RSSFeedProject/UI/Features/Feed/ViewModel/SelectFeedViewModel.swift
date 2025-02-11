@@ -20,12 +20,13 @@ class SelectFeedViewModel: BaseViewModel {
             }
         }
     }
-    @Injected(\.feedRepository) private var feedRepository
+    @Injected(\.feedService) private var feedService
 
     override init() {
         super.init()
         Task {
             await loadFeeds()
+            await feedService.setCachedRSSFeed(feeds: feeds)
         }
     }
 
@@ -33,7 +34,7 @@ class SelectFeedViewModel: BaseViewModel {
         var itemCopy = newItem
         itemCopy.isFavorite.toggle()
         Task {
-            let result = await feedRepository.addFavoriteToFeed(
+            let result = await feedService.addFavoriteToFeed(
                 feed: itemCopy)
             switch result {
             case .success(_):
@@ -56,7 +57,7 @@ class SelectFeedViewModel: BaseViewModel {
             )
             return
         }
-        let result = await feedRepository.addNewRSSFeed(
+        let result = await feedService.addNewRSSFeed(
             feed: userInput)
         switch result {
         case .success(let fetchedFeed):
@@ -73,7 +74,7 @@ class SelectFeedViewModel: BaseViewModel {
         onMain { [self] in
             feeds = []
         }
-        let result = await feedRepository.getSelectedRSSFeed()
+        let result = await feedService.getRSSFeed()
         switch result {
         case .success(let fetchedFeed):
             onMain { [self] in
@@ -87,7 +88,7 @@ class SelectFeedViewModel: BaseViewModel {
 
     func removeFeed(at offset: IndexSet) {
         Task {
-            let result = await feedRepository.removeItemFromFeed(at: offset)
+            let result = await feedService.removeItemFromFeed(at: offset)
             switch result {
             case .success():
                 await loadFeeds()
