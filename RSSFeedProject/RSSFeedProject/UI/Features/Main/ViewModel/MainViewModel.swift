@@ -7,18 +7,7 @@
 
 import SwiftUI
 
-class MainViewModel: ObservableObject {
-    @AppStorage("appearance") var selectedAppearance: Appearance = .system
+class MainViewModel: BaseViewModel {
     @AppStorage("language") var language = LocalizationService.shared.language
 
-    var colorScheme: ColorScheme? {
-        switch selectedAppearance {
-        case .light:
-            return .light
-        case .dark:
-            return .dark
-        case .system:
-            return nil
-        }
-    }
 }

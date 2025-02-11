@@ -15,6 +15,8 @@
 "home" = "Home";
 "light" = "Light";
 "link" = "Link";
+"manage-notifications" = "Manage notifications";
+"notifications" = "Notifications";
 "no-feeds-added-add-your-feeds-above" = "No feeds added. Add your feeds above!";
 "open-in-browser" = "Open in Browser";
 "rss-link" = "RSS Link";

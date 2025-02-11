@@ -67,28 +67,9 @@ struct SettingsPage: View {
     }
 
     @ViewBuilder fileprivate func toggleNotifications() -> some View {
-        Section("Notifications") {
-            VStack {
-//                Button("Send Test Notification") {
-//                    Task {
-//                        let isEnabled =
-//                            await NotificationManager.isNotificationsEnabled()
-//                        if isEnabled {
-//                            await NotificationManager.scheduleLocalNotification(
-//                                id: "test_notification",
-//                                title: "Meeting Reminder",
-//                                body:
-//                                    "You have a meeting invitation. Check your app for details.",
-//                                interval: 5
-//                            )
-//                        } else {
-//                            showAlert = true
-//                        }
-//                    }
-//                }
-                Button("Manage Notifications") {
-                    vm.openAppSettings()
-                }
+        Section(Localizable.notifications.localized()) {
+            Button(Localizable.manageNotifications.localized()) {
+                vm.openAppSettings()
             }
         }
     }
