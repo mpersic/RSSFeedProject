@@ -15,12 +15,16 @@ enum Localizable {
     static var rssViewer: String { "rss-viewer" }
 
     // MARK: - Feed Screen
-    static var internetConnectionRequired: String { "internet-connection-required" }
+    static var internetConnectionRequired: String {
+        "internet-connection-required"
+    }
     static var enterYourNewFeed: String { "enter-your-new-feed" }
     static var rssLink: String { "rss-link" }
     static var yourFeeds: String { "your-feeds" }
     static var yourFavorites: String { "your-favorites" }
-    static var noFeedsAddedAddYourFeedsAbove: String { "no-feeds-added-add-your-feeds-above" }
+    static var noFeedsAddedAddYourFeedsAbove: String {
+        "no-feeds-added-add-your-feeds-above"
+    }
 
     // MARK: - Settings Screen
     static var feedSettings: String { "feed-settings" }
@@ -33,7 +37,10 @@ enum Localizable {
     static var english: String { "english" }
     static var croatian: String { "croatian" }
     static var feedCleared: String { "feed-cleared" }
-    
+    static var notifications: String { "notifications" }
+    static var manageNotifications: String { "manage-notifications" }
+    static var darkMode: String { "dark-mode" }
+
     // MARK: - Feed Item Selection Screen
     static var title: String { "title" }
     static var description: String { "description" }
@@ -43,10 +50,4 @@ enum Localizable {
     static var date: String { "date" }
     static var link: String { "link" }
     static var openInBrowser: String { "open-in-browser" }
-    
-    // MARK: - Onboarding
-    static var darkMode: String { "dark-mode" }
-
-    // MARK: - Languages
-    static var language: String { "language" }
 }
