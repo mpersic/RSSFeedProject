@@ -37,6 +37,9 @@ class SelectFeedViewModel: BaseViewModel {
                 feed: itemCopy)
             switch result {
             case .success(_):
+                onMain { [self] in
+                    userInput = ""
+                }
                 await loadFeeds()
             case .failure(let error):
                 alertManager.show(
@@ -61,6 +64,7 @@ class SelectFeedViewModel: BaseViewModel {
         switch result {
         case .success(let fetchedFeed):
             onMain { [self] in
+                userInput = ""
                 feeds.append(fetchedFeed)
             }
         case .failure(let error):

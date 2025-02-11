@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FeedItemDetailsPage: View {
     let item: FeedItemModel
-    private let imageFrameWidth = UIScreen.width * 0.8
 
     var body: some View {
         List {
@@ -24,7 +23,7 @@ struct FeedItemDetailsPage: View {
                         ProgressView()
                     }
                     .scaledToFit()
-                    .frame(width: imageFrameWidth)
+                    .frame(width: Dimensions.imageFrameWidth)
                     .clipShape(.rect(cornerRadius: Dimensions.cornerRadius))
                 }
 

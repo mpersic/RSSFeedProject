@@ -19,6 +19,16 @@ struct FeedItemSelectionPage: View {
             if let description = feed.description, !description.trim().isEmpty {
                 Section(Localizable.description.localized()) {
                     Text(description)
+                    if let imageUrl = feed.imageUrl {
+                        AsyncImage(url: URL(string: imageUrl)) { image in
+                            image.resizable()
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .scaledToFit()
+                        .frame(width: Dimensions.imageFrameWidth)
+                        .clipShape(.rect(cornerRadius: Dimensions.cornerRadius))
+                    }
                 }
             }
             if let link = feed.link, let url = URL(string: link) {

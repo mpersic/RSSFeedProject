@@ -16,10 +16,11 @@ struct FeedModel: Equatable, Codable {
     var items: [FeedItemModel]?
     var isFavorite: Bool = false
     var link: String? = ""
-    
+    var imageUrl: String?
+
     // MARK: - Coding Keys
     private enum CodingKeys: String, CodingKey {
-        case title, date, description, items, isFavorite, link
+        case title, date, description, items, isFavorite, link, imageUrl
     }
 
     // MARK: - Initializers
@@ -33,6 +34,7 @@ struct FeedModel: Equatable, Codable {
             FeedItemModel(feedItem: feedItem)
         }
         link = feed.link
+        imageUrl = feed.image?.link
     }
 
     init(feed: AtomFeed) {
@@ -42,6 +44,7 @@ struct FeedModel: Equatable, Codable {
         items = feed.entries?.compactMap { entry in
             FeedItemModel(feedItem: entry)
         }
+        imageUrl = feed.icon
     }
 
     init(feed: JSONFeed) {
@@ -51,6 +54,7 @@ struct FeedModel: Equatable, Codable {
             FeedItemModel(feedItem: jsonItem)
         }
         link = feed.feedUrl
+        imageUrl = feed.icon
     }
 
     init(feed: Feed) {
