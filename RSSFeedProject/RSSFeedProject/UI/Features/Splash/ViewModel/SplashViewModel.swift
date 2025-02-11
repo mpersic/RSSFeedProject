@@ -7,10 +7,12 @@
 
 import SwiftUI
 
-class SplashViewModel : ObservableObject{
+class SplashViewModel: BaseViewModel {
     @Published var isFinished: Bool = false
     let iconHeight: CGFloat = 200
-    init(){
+    
+    override init() {
+        super.init()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
             withAnimation(.easeOut) {
                 self.isFinished = true

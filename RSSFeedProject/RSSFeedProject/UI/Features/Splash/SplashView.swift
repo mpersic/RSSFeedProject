@@ -20,6 +20,7 @@ struct SplashView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(height: vm.iconHeight)
+                .preferredColorScheme(vm.colorScheme)
         }
     }
 }

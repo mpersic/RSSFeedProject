@@ -11,8 +11,6 @@ import Foundation
 import SwiftUI
 
 class SettingsViewModel: BaseViewModel {
-    @AppStorage("appearance") var selectedAppearance: Appearance =
-        .system
     @AppStorage("language")
     var language = LocalizationService.shared.language
     @Injected(\.feedService) private var feedService
