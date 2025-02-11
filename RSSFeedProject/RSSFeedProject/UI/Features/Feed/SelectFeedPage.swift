@@ -21,6 +21,9 @@ struct SelectFeedPage: View {
             feedView()
         }
         .uses(vm.alertManager)
+        .onAppear{
+            vm.onAppear()
+        }
         .refreshable {
             Task {
                 await vm.loadFeeds()

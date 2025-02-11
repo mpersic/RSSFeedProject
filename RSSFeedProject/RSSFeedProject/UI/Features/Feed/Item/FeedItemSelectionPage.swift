@@ -21,6 +21,15 @@ struct FeedItemSelectionPage: View {
                     Text(description)
                 }
             }
+            if let link = feed.link, let url = URL(string: link) {
+                Section(Localizable.link.localized()) {
+                    Link(
+                        Localizable.openInBrowser.localized(), destination: url
+                    )
+                    .foregroundColor(Colors.blue)
+                }
+            }
+
             Section(Localizable.items.localized()) {
                 ForEach(feed.items ?? [], id: \.title) { item in
                     NavigationLink(destination: FeedItemDetailsPage(item: item))

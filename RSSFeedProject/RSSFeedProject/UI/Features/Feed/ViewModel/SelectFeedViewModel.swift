@@ -22,8 +22,7 @@ class SelectFeedViewModel: BaseViewModel {
     }
     @Injected(\.feedService) private var feedService
 
-    override init() {
-        super.init()
+    func onAppear() {
         Task {
             await loadFeeds()
             await feedService.setCachedRSSFeed(feeds: feeds)
