@@ -37,7 +37,13 @@ struct RSSFeedProjectApp: App {
         }
     }
 
-    func handleNewNotification() async {
+    private func scheduleAppRefresh() {
+        let request = BGAppRefreshTaskRequest(identifier: "com.mperr.refresh")
+        request.earliestBeginDate = .now.addingTimeInterval(15 * 60)
+        try? BGTaskScheduler.shared.submit(request)
+    }
+
+    private func handleNewNotification() async {
         let isEnabled =
             await NotificationManager.isNotificationsEnabled()
         if !isEnabled {
@@ -55,11 +61,5 @@ struct RSSFeedProjectApp: App {
                 interval: 1
             )
         }
-    }
-
-    func scheduleAppRefresh() {
-        let request = BGAppRefreshTaskRequest(identifier: "com.mperr.refresh")
-        request.earliestBeginDate = .now.addingTimeInterval(15 * 60)
-        try? BGTaskScheduler.shared.submit(request)
     }
 }

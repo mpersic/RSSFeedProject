@@ -12,8 +12,19 @@
 		5E5762682D573B6C0034FFDB /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 5E5762672D573B6C0034FFDB /* Factory */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5E810D892D5B5D3900436BA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5E5762302D572E5C0034FFDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5E5762372D572E5C0034FFDB;
+			remoteInfo = RSSFeedProject;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		5E5762382D572E5C0034FFDB /* RSSFeedProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSFeedProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E810D852D5B5D3900436BA8 /* RSSFeedProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSFeedProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -35,6 +46,11 @@
 			path = RSSFeedProject;
 			sourceTree = "<group>";
 		};
+		5E810D862D5B5D3900436BA8 /* RSSFeedProjectTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RSSFeedProjectTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +64,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5E810D822D5B5D3900436BA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -55,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				5E57623A2D572E5C0034FFDB /* RSSFeedProject */,
+				5E810D862D5B5D3900436BA8 /* RSSFeedProjectTests */,
 				5E5762392D572E5C0034FFDB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				5E5762382D572E5C0034FFDB /* RSSFeedProject.app */,
+				5E810D852D5B5D3900436BA8 /* RSSFeedProjectTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,6 +120,29 @@
 			productReference = 5E5762382D572E5C0034FFDB /* RSSFeedProject.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5E810D842D5B5D3900436BA8 /* RSSFeedProjectTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E810D8B2D5B5D3900436BA8 /* Build configuration list for PBXNativeTarget "RSSFeedProjectTests" */;
+			buildPhases = (
+				5E810D812D5B5D3900436BA8 /* Sources */,
+				5E810D822D5B5D3900436BA8 /* Frameworks */,
+				5E810D832D5B5D3900436BA8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5E810D8A2D5B5D3900436BA8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5E810D862D5B5D3900436BA8 /* RSSFeedProjectTests */,
+			);
+			name = RSSFeedProjectTests;
+			packageProductDependencies = (
+			);
+			productName = RSSFeedProjectTests;
+			productReference = 5E810D852D5B5D3900436BA8 /* RSSFeedProjectTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -107,6 +155,10 @@
 				TargetAttributes = {
 					5E5762372D572E5C0034FFDB = {
 						CreatedOnToolsVersion = 16.0;
+					};
+					5E810D842D5B5D3900436BA8 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 5E5762372D572E5C0034FFDB;
 					};
 				};
 			};
@@ -131,12 +183,20 @@
 			projectRoot = "";
 			targets = (
 				5E5762372D572E5C0034FFDB /* RSSFeedProject */,
+				5E810D842D5B5D3900436BA8 /* RSSFeedProjectTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5E5762362D572E5C0034FFDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E810D832D5B5D3900436BA8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -153,7 +213,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5E810D812D5B5D3900436BA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5E810D8A2D5B5D3900436BA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5E5762372D572E5C0034FFDB /* RSSFeedProject */;
+			targetProxy = 5E810D892D5B5D3900436BA8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5E5762452D572E5D0034FFDB /* Debug */ = {
@@ -350,6 +425,45 @@
 			};
 			name = Release;
 		};
+		5E810D8C2D5B5D3900436BA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mperr.RSSFeedProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSSFeedProject.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RSSFeedProject";
+			};
+			name = Debug;
+		};
+		5E810D8D2D5B5D3900436BA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mperr.RSSFeedProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSSFeedProject.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RSSFeedProject";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -367,6 +481,15 @@
 			buildConfigurations = (
 				5E5762482D572E5D0034FFDB /* Debug */,
 				5E5762492D572E5D0034FFDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5E810D8B2D5B5D3900436BA8 /* Build configuration list for PBXNativeTarget "RSSFeedProjectTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E810D8C2D5B5D3900436BA8 /* Debug */,
+				5E810D8D2D5B5D3900436BA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
